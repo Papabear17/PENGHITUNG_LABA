@@ -1,0 +1,21 @@
+{
+  "name": "Kalkulator HPP Cireng Pro",
+  "short_name": "HPP Pro",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#ff7300",
+  "description": "Aplikasi Web Pro untuk Menghitung HPP Cireng dan Laba Usaha Anda",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

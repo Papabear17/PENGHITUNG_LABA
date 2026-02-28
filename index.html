@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penghitung Cireng Bossku</title>
+
+    <meta name="theme-color" content="#f97316">
+    <meta name="description" content="Aplikasi hitung HPP Cireng yang Super Bersih dan Mudah">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-content">
+            <div class="brand">
+                <i class="ri-fire-fill"></i>
+                <span>Cireng HPP App</span>
+            </div>
+            <button id="installAppBtn" class="btn-outline hidden">
+                <i class="ri-smartphone-line"></i> Install App
+            </button>
+        </div>
+    </nav>
+
+    <div class="app-layout">
+
+        <!-- Left Side: Input Data -->
+        <main class="input-section">
+            <div class="header-text">
+                <h1>Halo Boss! 👋</h1>
+                <p>Mari hitung HPP dan cuan kita hari ini dengan mudah.</p>
+            </div>
+
+            <section class="card input-card">
+                <div class="card-title">
+                    <div class="icon-box orange">
+                        <i class="ri-shopping-basket-line"></i>
+                    </div>
+                    <h2>Resep & Bahan Baku</h2>
+                </div>
+
+                <p class="subtitle">Masukkan rincian bahan-bahan yang Anda beli dan takaran yang dipakai.</p>
+
+                <div class="bahan-list" id="bahanTbody">
+                    <!-- Ingredients will render here as cards -->
+                </div>
+
+                <button id="addBahanBtn" class="btn-tambah-bahan">
+                    <i class="ri-add-circle-fill"></i> Tambah Bahan Baru
+                </button>
+
+                <div class="total-bahan-chip">
+                    Total Biaya Bahan: <span id="labelTotalBahan" class="angka-tebal">Rp 0</span>
+                </div>
+            </section>
+        </main>
+
+        <!-- Right Side: Calculation & Output (Sticky) -->
+        <aside class="result-section">
+            <div class="sticky-container">
+
+                <!-- Kalkulasi -->
+                <section class="card logic-card">
+                    <div class="card-title">
+                        <div class="icon-box yellow">
+                            <i class="ri-calculator-line"></i>
+                        </div>
+                        <h2>Perhitungan Produksi</h2>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Biaya Operasional (Gas, Kemasan, dll)</label>
+                        <div class="input-wrapper">
+                            <span class="prefix">Rp</span>
+                            <input type="number" id="inputBiayaOperasional" placeholder="0">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Berapa Pcs Cireng yang Dihasilkan?</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="inputTotalProduk" placeholder="Contoh: 50" min="1" value="1">
+                            <span class="suffix">Pcs</span>
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="summary-line">
+                        <span>Total Modal Produksi</span>
+                        <strong id="valTotalProduksi" class="primary-text">Rp 0</strong>
+                    </div>
+
+                    <div class="summary-line big">
+                        <span>HPP (Harga Pokok) per Pcs</span>
+                        <strong id="valHppPerPcs" class="primary-text">Rp 0</strong>
+                    </div>
+
+                    <div class="saran-box">
+                        <i class="ri-lightbulb-flash-line"></i>
+                        <div>
+                            <span>Saran Harga Jual (Untung 50%)</span>
+                            <strong id="valSaranJual">Rp 0</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Keuntungan -->
+                <section class="card profit-card">
+                    <div class="card-title">
+                        <div class="icon-box green">
+                            <i class="ri-money-dollar-circle-line"></i>
+                        </div>
+                        <h2>Simulasi Cuannya</h2>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Rencana Jual Dalam Bentuk Kemasan/Pack?</label>
+                        <div class="input-wrapper" style="margin-bottom: 0.5rem;">
+                            <span class="prefix">Isi</span>
+                            <input type="number" id="inputIsiPerPack" value="5" placeholder="Contoh: 5">
+                            <span class="suffix">Pcs / Pack</span>
+                        </div>
+                        <div class="summary-line" style="margin-top: 0.5rem;">
+                            <span>HPP Pokok per Pack (Modal):</span>
+                            <strong id="valHppPerPack" class="primary-text">Rp 0</strong>
+                        </div>
+                    </div>
+
+                    <div class="input-group" style="margin-top: 1rem;">
+                        <label>Harga Jual Aktual Anda per PACK</label>
+                        <div class="input-wrapper success-border">
+                            <span class="prefix">Rp</span>
+                            <input type="number" id="inputHargaJualPack" placeholder="Berapa mau dijual per pack?">
+                        </div>
+                    </div>
+
+                    <div class="input-group" style="margin-top: 1rem;">
+                        <label>Atau Harga Jual per Pcs (1 Pack = 5 Pcs)</label>
+                        <div class="input-wrapper success-border">
+                            <span class="prefix">Rp</span>
+                            <input type="number" id="inputHargaJualPcs" placeholder="Harga per pcs">
+                        </div>
+                        <div class="summary-line" style="margin-top: 0.5rem;">
+                            <span> equivalen Harga per Pack:</span>
+                            <strong id="valHargaPerPackDariPcs" class="primary-text">Rp 0</strong>
+                        </div>
+                    </div>
+
+                    <!-- New Section: Sales Data for 1 Pack -->
+                    <div class="card"
+                        style="margin-top: 1.5rem; background: var(--bg-card); border: 2px solid var(--primary);">
+                        <div class="card-title">
+                            <div class="icon-box primary" style="background: var(--primary); color: white;">
+                                <i class="ri-box-3-line"></i>
+                            </div>
+                            <h3 id="judulDataPenjualan">Data Penjualan 1 Pack (Isi 5)</h3>
+                        </div>
+
+                        <div class="summary-grid"
+                            style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div class="data-card">
+                                <div class="data-label">Modal per Pack</div>
+                                <div class="data-value" id="valModalPerPack">Rp 0</div>
+                            </div>
+                            <div class="data-card">
+                                <div class="data-label">Untung per Pack</div>
+                                <div class="data-value" id="valUntungPerPack">Rp 0</div>
+                            </div>
+                            <div class="data-card">
+                                <div class="data-label">Margin Profit (%)</div>
+                                <div class="data-value" id="valMarginProfit">0%</div>
+                            </div>
+                            <div class="data-card">
+                                <div class="data-label">Target Penjualan (Pack)</div>
+                                <div class="data-value" id="valTargetPenjualan">0</div>
+                            </div>
+                            <div class="data-card">
+                                <div class="data-label">Estimasi Total Cuan</div>
+                                <div class="data-value" id="valEstimasiCuan">Rp 0</div>
+                            </div>
+                            <div class="data-card">
+                                <div class="data-label">Break-even Point</div>
+                                <div class="data-value" id="valBreakEven">0 Pack</div>
+                            </div>
+                        </div>
+
+                        <div class="saran-box" style="margin-top: 1rem;">
+                            <i class="ri-lightbulb-flash-line"></i>
+                            <div>
+                                <span>Analisis Penjualan:</span>
+                                <strong id="valAnalisisPenjualan">Masukkan harga jual untuk melihat analisis</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profit-hasil">
+                        <div class="half-box">
+                            <span>Untung 1 Pack</span>
+                            <h4 id="valLabaPerPack">Rp 0</h4>
+                        </div>
+                        <div class="half-box green-fill">
+                            <span>TOTAL CUAN (Rencana Jual Box)</span>
+                            <h3 id="valTotalLabaPack">Rp 0</h3>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card logic-card" style="margin-top: 1.5rem; border-color: var(--secondary-dark);">
+                    <div class="saran-box" style="margin-top:0;">
+                        <i class="ri-information-line"></i>
+                        <div>
+                            <span>Total Pack (Boks) yang didapat dari 1 Resep:</span>
+                            <strong id="valTotalPackDidapat" style="color: var(--text-main);">0 Pack (Sisa 0
+                                Pcs)</strong>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast"><i class="ri-check-line"></i> <span>Aksi Berhasil!</span></div>
+
+    <script src="script.js"></script>
+    <script>
+        // Form PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker OK!', reg))
+                    .catch(e => console.error('SW Failed', e));
+            });
+        }
+    </script>
+</body>
+
+</html>
